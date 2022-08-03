@@ -1,4 +1,4 @@
-# Import required libraries
+# Import required libraries   NEW
 import pandas as pd
 import dash
 import dash_html_components as html
@@ -71,17 +71,17 @@ def compute_data_choice_2(df):
 
 
 # Application layout
-app.layout = html.Div(children=[html.H1('US Domestic Airline Flight Performance ', 
-                                style={'textAlign': 'center', 'color': '#503D36',
-                      'font-size': 24}), 
+app.layout = html.Div(children=[ 
                                 # TASK1: Add title to the dashboard
                                 # Enter your code below. Make sure you have correct formatting.
-                                 
+                                 html.H1('Airline Performance Dashboard', 
+                                style={'textAlign': 'center', 'color': '#503D36',
+                                'font-size':24}),  
                                 # REVIEW2: Dropdown creation
                                 # Create an outer division 
                                 html.Div([
                                     # Add an division
-                                        html.Div([
+                                    html.Div([
                                         # Create an division for adding dropdown helper text for report type
                                         html.Div(
                                             [
@@ -92,13 +92,13 @@ app.layout = html.Div(children=[html.H1('US Domestic Airline Flight Performance 
                                         # Enter your code below. Make sure you have correct formatting.
                                           dcc.Dropdown(id='input-type', 
                    options=[
-                           {'label':'Yearly Airline Performance Report','value':'OPT1'},
-                           {'label':'Yearly Airline Delay Report','value':'OPT2'}
+                           {'label': 'Yearly Airline Performance Report', 'value': 'OPT1'},
+                           {'label': 'Yearly Airline Delay Report', 'value': 'OPT2'}
                            ],
                   placeholder='Select a report type',
                   style={'width':'80%','padding':'3px','font-size':'20px','text-align-last':'center'})
                                     # Place them next to each other using the division style
-                                    ], style={'display':'flex'}), 
+                                    ], style={'display':'flex'}),
                                     
                                    # Add next division 
                                    html.Div([
@@ -114,8 +114,8 @@ app.layout = html.Div(children=[html.H1('US Domestic Airline Flight Performance 
                                                      placeholder="Select a year",
                                                      style={'width':'80%', 'padding':'3px', 'font-size': '20px', 'text-align-last' : 'center'}),
                                             # Place them next to each other using the division style
-                                            ], style={'display': 'flex'}), 
-                                  
+                                            ], style={'display': 'flex'}),  
+                                          ]),
                                 
                                 # Add Computed graphs
                                 # REVIEW3: Observe how we add an empty division and providing an id that will be updated during callback
@@ -131,17 +131,18 @@ app.layout = html.Div(children=[html.H1('US Domestic Airline Flight Performance 
                                 html.Div([
                                         html.Div([ ], id='plot4'),
                                         html.Div([ ], id='plot5')
-                                ], style={'display': 'flex'}), ])
-                                
+                                ], style={'display': 'flex'}),
+                                ])
+
 # Callback function definition
 # TASK4: Add 5 ouput components
 # Enter your code below. Make sure you have correct formatting.
-@app.callback( [Output(component_id='plot1', component_property='children'), 
- Output(component_id='plot2', component_property='children'),
- Output(component_id='plot3', component_property='children'),
- Output(component_id='plot4', component_property='children'),
- Output(component_id='plot5', component_property='children')] 
 
+@app.callback( [[Output(component_id='plot1', component_property='children'),
+            Output(component_id='plot2', component_property='children'),
+            Output(component_id='plot3', component_property='children'),
+            Output(component_id='plot4', component_property='children'),
+            Output(component_id='plot5', component_property='children')]],
                [Input(component_id='input-type', component_property='value'),
                 Input(component_id='input-year', component_property='value')],
                # REVIEW4: Holding output state till user enters all the form information. In this case, it will be chart type and year
@@ -163,8 +164,9 @@ def get_graph(chart, year, children1, children2, c3, c4, c5):
             bar_fig = px.bar(bar_data, x='Month', y='Flights', color='CancellationCode', title='Monthly Flight Cancellation')
             
             # TASK5: Average flight time by reporting airline
-            # Enter your code below. Make sure you have correct formatting.
             line_fig = px.line(line_data, x='Month', y='AirTime', color='Reporting_Airline', title='Average monthly flight time (minutes) by airline')
+            # Enter your code below. Make sure you have correct formatting.
+            
             
             # Percentage of diverted airport landings per reporting airline
             pie_fig = px.pie(div_data, values='Flights', names='Reporting_Airline', title='% of flights by reporting airline')
@@ -183,7 +185,7 @@ def get_graph(chart, year, children1, children2, c3, c4, c5):
             
             # TASK6: Number of flights flying to each state from each reporting airline
             # Enter your code below. Make sure you have correct formatting.
-              tree_fig = px.treemap(tree_data, path=['DestState', 'Reporting_Airline'], 
+            tree_fig = px.treemap(tree_data, path=[['DestState', 'Reporting_Airline']], 
                       values='Flights',
                       color='Flights',
                       color_continuous_scale='RdBu',
