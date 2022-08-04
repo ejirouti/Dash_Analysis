@@ -138,11 +138,11 @@ app.layout = html.Div(children=[
 # TASK4: Add 5 ouput components
 # Enter your code below. Make sure you have correct formatting.
 
-@app.callback( [[Output(component_id='plot1', component_property='children'),
+@app.callback( [Output(component_id='plot1', component_property='children'),
             Output(component_id='plot2', component_property='children'),
             Output(component_id='plot3', component_property='children'),
             Output(component_id='plot4', component_property='children'),
-            Output(component_id='plot5', component_property='children')]],
+            Output(component_id='plot5', component_property='children')],
                [Input(component_id='input-type', component_property='value'),
                 Input(component_id='input-year', component_property='value')],
                # REVIEW4: Holding output state till user enters all the form information. In this case, it will be chart type and year
@@ -185,7 +185,7 @@ def get_graph(chart, year, children1, children2, c3, c4, c5):
             
             # TASK6: Number of flights flying to each state from each reporting airline
             # Enter your code below. Make sure you have correct formatting.
-            tree_fig = px.treemap(tree_data, path=[['DestState', 'Reporting_Airline']], 
+            tree_fig = px.treemap(tree_data, path=['DestState', 'Reporting_Airline'],
                       values='Flights',
                       color='Flights',
                       color_continuous_scale='RdBu',
